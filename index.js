@@ -14,7 +14,13 @@ module.exports = function(source) {
   // 
   // Compilation
   // 
-  template  = hamlc.template(source, null, null, {placement: 'standalone'});
+  try {
+    template  = hamlc.template(source, null, null, {placement: 'standalone'});
+  } catch(e) {
+    if(! (e instanceof Error)) e = new Error(e);
+    throw e;
+  }
+
   result    = "module.exports =" + template.toString();
   return result;
 }
